@@ -160,69 +160,128 @@
       }, { passive: true });
     }
   
-    // Fake data for movies
-    const sampleImages = [
+    // =====================
+    // TMDB Client & rendering
+    // =====================
+    const TMDB = {
+      API_KEY: 'e4b90327227c88daac14c0bd0c1f93cd',
+      BASE_URL: 'https://api.themoviedb.org/3',
+      IMAGE_BASE_URL: 'https://image.tmdb.org/t/p',
+      V4_TOKEN: 'eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJlNGI5MDMyNzIyN2M4OGRhYWMxNGMwYmQwYzFmOTNjZCIsIm5iZiI6MTc1ODY0ODMyMS43NDg5OTk4LCJzdWIiOiI2OGQyZDgwMTJhNWU3YzBhNDVjZWNmZWUiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.aylEitwtAH0w4XRk8izJNNkF_bet8sxiC9iI-zSdHbU'
+    };
+
+    const FALLBACK_IMAGES = [
       'https://images.unsplash.com/photo-1524985069026-dd778a71c7b4?q=80&w=800&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1497032628192-86f99bcd76bc?q=80&w=800&auto=format&fit=crop',
       'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963f?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1542204637-e67bc7d41e48?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1517602382275-86b7a2b4e0b3?q=80&w=800&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1535016120720-40c646be5580?q=80&w=800&auto=format&fit=crop'
+      'https://images.unsplash.com/photo-1542204637-e67bc7d41e48?q=80&w=800&auto=format&fit=crop'
     ];
-    function createCard(index) {
+
+    function buildImage(path, size) {
+      const s = size || 'w342';
+      if (!path) return FALLBACK_IMAGES[Math.floor(Math.random() * FALLBACK_IMAGES.length)];
+      return `${TMDB.IMAGE_BASE_URL}/${s}${path}`;
+    }
+
+    async function tmdb(path, params) {
+      const url = new URL(`${TMDB.BASE_URL}${path}`);
+      const defaultParams = { language: 'fr-FR', include_adult: 'false' };
+      const qp = { ...(params || {}), ...defaultParams };
+      Object.entries(qp).forEach(([k, v]) => {
+        if (v !== undefined && v !== null && v !== '') url.searchParams.set(k, String(v));
+      });
+      const res = await fetch(url.toString(), {
+        headers: {
+          Authorization: `Bearer ${TMDB.V4_TOKEN}`,
+          Accept: 'application/json'
+        }
+      });
+      if (!res.ok) throw new Error(`TMDB ${res.status}`);
+      return res.json();
+    }
+
+    function formatYear(dateStr) {
+      if (!dateStr) return '—';
+      const d = new Date(dateStr);
+      return Number.isNaN(d.getTime()) ? '—' : String(d.getFullYear());
+    }
+
+    function createMediaCard(item, index) {
+      const isMovie = !!item.title;
+      const title = item.title || item.name || 'Sans titre';
+      const year = formatYear(item.release_date || item.first_air_date);
+      const rating = typeof item.vote_average === 'number' ? (Math.round(item.vote_average * 10) / 10).toFixed(1) : '—';
+      const poster = buildImage(item.poster_path, 'w342');
       const el = document.createElement('article');
       el.className = 'card';
       el.innerHTML = `
         <div class="card-media skeleton">
           <picture>
-            <source media="(min-width: 1024px)" srcset="${sampleImages[index % sampleImages.length]}&dpr=2" />
-            <img loading="lazy" alt="Poster" />
+            <source media="(min-width: 1024px)" srcset="${buildImage(item.poster_path, 'w780')} 2x" />
+            <img loading="lazy" alt="Poster: ${title}" />
           </picture>
         </div>
         <div class="card-overlay" aria-hidden="true">
           <div class="overlay-center">
-            <button class="play-btn" title="Lire" aria-label="Lire">
-              ▶
-            </button>
+            <button class="play-btn" title="Lire" aria-label="Lire">▶</button>
           </div>
           <div class="overlay-bottom">
-            <div class="overlay-title">Titre ${index + 1}</div>
-            <div class="overlay-meta">2025 • Action • 16+</div>
+            <div class="overlay-title">${title}</div>
+            <div class="overlay-meta">${year} • ${isMovie ? 'Film' : 'Série'} • ${rating}</div>
           </div>
         </div>
         <span class="badge">TOP ${((index % 10) + 1)}</span>
         <div class="card-actions">
-          <button class="icon-btn" title="Ajouter à ma liste" data-action="add">
-            +
-          </button>
+          <button class="icon-btn" title="Ajouter à ma liste" data-action="add">+</nbutton>
           <button class="icon-btn" title="Voir les détails" data-action="info">i</button>
         </div>
         <div class="card-info">
-          <h3 class="card-title">Titre ${index + 1}</h3>
-          <p class="card-meta">2025 • Action • 16+</p>
+          <h3 class="card-title">${title}</h3>
+          <p class="card-meta">${year} • ${isMovie ? 'Film' : 'Série'} • ${rating}</p>
         </div>`;
+      const img = el.querySelector('img');
+      img.addEventListener('load', () => el.querySelector('.card-media').classList.remove('skeleton'));
+      img.src = poster;
       return el;
     }
-  
-    function hydrateGrid(grid) {
+
+    function populateGrid(grid, items) {
       if (!grid) return;
-      const cards = Array.from({ length: 14 }, (_, i) => createCard(i));
-      cards.forEach((c, i) => {
-        c.style.animation = `fade-in var(--dur-3) var(--ease-smooth) ${i * 40}ms both`;
-        grid.appendChild(c);
-        // Simulate image load
-        const img = c.querySelector('img');
-        img.addEventListener('load', () => c.querySelector('.card-media').classList.remove('skeleton'));
-        img.src = sampleImages[i % sampleImages.length];
+      grid.innerHTML = '';
+      (items || []).slice(0, 18).forEach((item, i) => {
+        const card = createMediaCard(item, i);
+        card.style.animation = `fade-in var(--dur-3) var(--ease-smooth) ${i * 40}ms both`;
+        grid.appendChild(card);
       });
     }
-  
+
+    async function loadFromTMDB() {
+      const seriesGrid = document.querySelector('#series .grid.movies');
+      const filmsGrid = document.querySelector('#films .grid.movies');
+      const newsGrid = document.querySelector('#nouveaux .grid.movies');
+
+      try {
+        const [trendingTv, popularMovies, nowPlaying] = await Promise.all([
+          tmdb('/trending/tv/day', { page: 1 }),
+          tmdb('/movie/popular', { page: 1 }),
+          tmdb('/movie/now_playing', { page: 1 })
+        ]);
+        populateGrid(seriesGrid, trendingTv.results);
+        populateGrid(filmsGrid, popularMovies.results);
+        populateGrid(newsGrid, nowPlaying.results);
+      } catch (err) {
+        // Fallback: keep skeletons empty if API fails
+        console.error('TMDB error:', err);
+      }
+    }
+
     // Staggered fade-in animation via JS-created keyframes
     const style = document.createElement('style');
     style.textContent = `@keyframes fade-in { from { opacity: 0; transform: translateY(8px) } to { opacity: 1; transform: none } }`;
     document.head.appendChild(style);
   
-    document.querySelectorAll('.grid.movies').forEach(hydrateGrid);
+    // Load real data from TMDB
+    loadFromTMDB();
   
     // Simple user list: persist added items in localStorage
     const LIST_KEY = 'streamflix-list';
@@ -232,7 +291,8 @@
       if (!listGrid) return;
       listGrid.innerHTML = '';
       myList.forEach((src, i) => {
-        const card = createCard(i);
+        const item = { title: `Ma liste ${i + 1}`, poster_path: null };
+        const card = createMediaCard(item, i);
         card.querySelector('img').src = src;
         listGrid.appendChild(card);
       });
