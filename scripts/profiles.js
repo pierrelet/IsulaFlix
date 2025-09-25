@@ -1,4 +1,4 @@
-// IsulaFlix Profiles Page
+// StreamFlix Profiles Page
 
 (function () {
     console.log('Profiles script starting...');
@@ -35,14 +35,14 @@
 
     // Theme system (same as main page)
     const THEMES = ['dark', 'light', 'sepia'];
-    const STORAGE_KEY = 'isulaflix-theme';
+    const STORAGE_KEY = 'streamflix-theme';
     const storedTheme = localStorage.getItem(STORAGE_KEY);
     if (storedTheme && THEMES.includes(storedTheme)) {
         html.setAttribute('data-theme', storedTheme);
     }
 
     // Profile storage key
-    const PROFILES_KEY = 'isulaflix-profiles';
+    const PROFILES_KEY = 'streamflix-profiles';
     
     // Load profiles from localStorage
     function loadProfiles() {
@@ -99,8 +99,8 @@
     
     // Select profile
     function selectProfile(profile) {
-        localStorage.setItem('isulaflix-selected-profile', profile.name);
-        localStorage.setItem('isulaflix-selected-profile-image', profile.image);
+        localStorage.setItem('streamflix-selected-profile', profile.name);
+        localStorage.setItem('streamflix-selected-profile-image', profile.image);
         window.location.href = 'index.html';
     }
     
@@ -265,7 +265,7 @@
     }
 
     // Check if user already has a profile selected
-    const selectedProfile = localStorage.getItem('isulaflix-selected-profile');
+    const selectedProfile = localStorage.getItem('streamflix-selected-profile');
     if (selectedProfile && !window.location.search.includes('change=true')) {
         // User already has a profile, redirect to main page
         window.location.href = 'index.html';

@@ -1,4 +1,4 @@
-# IsulaFlix 🎬
+# StreamFlix 🎬
 
 Une plateforme de streaming moderne inspirée de Netflix, entièrement personnalisée avec vos ressources.
 
@@ -16,7 +16,7 @@ Une plateforme de streaming moderne inspirée de Netflix, entièrement personnal
 
 ## 🎨 Personnalisation
 
-- **Couleurs** : Palette cyan (#00d4ff) distinctive d'IsulaFlix
+- **Couleurs** : Palette cyan (#00d4ff) distinctive de StreamFlix
 - **Favicon** : Votre icône personnalisée (Unknown-5.jpg)
 - **Profils** : Vos 3 images de profils (Unknown-2.jpg, Unknown-3.jpg, Unknown-4.jpg)
 - **Trailer** : Vidéo Avatar 3 intégrée dans la section hero
@@ -67,4 +67,4 @@ Le site s'adapte parfaitement à tous les écrans :
 
 ---
 
-*IsulaFlix - L'avenir du streaming* 🚀
+*StreamFlix - L'avenir du streaming* 🚀

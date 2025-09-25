@@ -1,9 +1,9 @@
-// IsulaFlix Search Page
+// StreamFlix Search Page
 
 (function () {
     'use strict';
     
-    console.log('IsulaFlix Search page loading...');
+    console.log('StreamFlix Search page loading...');
     
     // Wait for DOM to be ready
     document.addEventListener('DOMContentLoaded', function() {
@@ -97,7 +97,7 @@
         let currentFilter = 'all';
         
         // User list functionality
-        const LIST_KEY = 'isulaflix-list';
+        const LIST_KEY = 'streamflix-list';
         let myList = JSON.parse(localStorage.getItem(LIST_KEY) || '[]');
 
         function toggleSearch() {
@@ -740,11 +740,26 @@
                 
                 // Mouse wheel horizontal scroll
                 carousel.addEventListener('wheel', (e) => {
-                    if (e.deltaY !== 0) {
+                    // Check if it's a horizontal scroll (Shift held) or if deltaX is significant
+                    const isHorizontalScroll = e.shiftKey || Math.abs(e.deltaX) > Math.abs(e.deltaY);
+                    
+                    if (isHorizontalScroll) {
                         e.preventDefault();
                         isUserInteracting = true;
-                        carousel.scrollLeft += e.deltaY * 2;
+                        carousel.scrollLeft += (e.deltaX || e.deltaY) * 2;
                         setTimeout(() => { isUserInteracting = false; }, 2000);
+                    } else if (e.deltaY !== 0) {
+                        // For vertical scroll, only prevent if we're not at the scroll boundaries
+                        const isAtTop = window.scrollY <= 0;
+                        const isAtBottom = window.scrollY >= (document.documentElement.scrollHeight - window.innerHeight);
+                        
+                        // Only prevent vertical scroll if we're at boundaries and trying to scroll further
+                        if ((isAtTop && e.deltaY < 0) || (isAtBottom && e.deltaY > 0)) {
+                            e.preventDefault();
+                            isUserInteracting = true;
+                            carousel.scrollLeft += e.deltaY * 2;
+                            setTimeout(() => { isUserInteracting = false; }, 2000);
+                        }
                     }
                 });
             });
@@ -753,6 +768,6 @@
         // Initialize carousels after content is loaded
         setTimeout(initializeCarousels, 100);
 
-        console.log('Search page initialized successfully!');
+        console.log('StreamFlix Search page initialized successfully!');
     }
 })();
