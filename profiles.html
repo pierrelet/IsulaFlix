@@ -26,18 +26,6 @@
         <div class="profiles-content">
           <h1 class="profiles-title">Qui regarde IsulaFlix ?</h1>
           <div class="profiles-grid-large">
-            <div class="profile-card-large" data-profile="profil1">
-              <img src="assets/images/profils/Unknown-2.jpg" alt="Profil 1" class="profile-avatar-large">
-              <h3 class="profile-name-large">Profil 1</h3>
-            </div>
-            <div class="profile-card-large" data-profile="profil2">
-              <img src="assets/images/profils/Unknown-3.jpg" alt="Profil 2" class="profile-avatar-large">
-              <h3 class="profile-name-large">Profil 2</h3>
-            </div>
-            <div class="profile-card-large" data-profile="profil3">
-              <img src="assets/images/profils/Unknown-4.jpg" alt="Profil 3" class="profile-avatar-large">
-              <h3 class="profile-name-large">Profil 3</h3>
-            </div>
             <div class="profile-card-large add-profile-large" data-profile="add">
               <div class="add-icon-large">+</div>
               <h3 class="profile-name-large">Ajouter un profil</h3>
@@ -49,6 +37,50 @@
         </div>
       </div>
     </main>
+
+    <!-- Modal de création de profil -->
+    <div class="modal-overlay" id="createProfileModal" aria-hidden="true">
+      <div class="modal-content profile-modal">
+        <button class="modal-close" id="closeCreateModal" aria-label="Fermer">×</button>
+        <h2 class="modal-title">Créer un nouveau profil</h2>
+        
+        <div class="profile-form">
+          <div class="profile-image-section">
+            <div class="profile-image-preview" id="profileImagePreview">
+              <img id="previewImg" src="" alt="Aperçu" style="display: none;">
+              <div class="image-placeholder">Choisir une image</div>
+            </div>
+            <div class="image-selection">
+              <h4>Choisir une image de profil :</h4>
+              <div class="image-options">
+                <div class="image-option" data-image="assets/images/profils/Unknown-2.jpg">
+                  <img src="assets/images/profils/Unknown-2.jpg" alt="Image 1">
+                  <span>Image 1</span>
+                </div>
+                <div class="image-option" data-image="assets/images/profils/Unknown-3.jpg">
+                  <img src="assets/images/profils/Unknown-3.jpg" alt="Image 2">
+                  <span>Image 2</span>
+                </div>
+                <div class="image-option" data-image="assets/images/profils/Unknown-4.jpg">
+                  <img src="assets/images/profils/Unknown-4.jpg" alt="Image 3">
+                  <span>Image 3</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="profile-name-section">
+            <label for="profileNameInput">Nom du profil</label>
+            <input type="text" id="profileNameInput" placeholder="Entrez le nom du profil" maxlength="20">
+          </div>
+          
+          <div class="profile-actions">
+            <button class="btn ghost" id="cancelCreateBtn">Annuler</button>
+            <button class="btn primary" id="createProfileBtn">Créer le profil</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script src="scripts/profiles.js" defer></script>
   </body>
