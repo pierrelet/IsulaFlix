@@ -811,21 +811,55 @@
                 const nextBtn = document.querySelector(`[data-target="${carouselId}"].carousel-next`);
                 
                 if (prevBtn && nextBtn) {
-                    // Scroll amount (width of 3 cards + gaps)
-                    const scrollAmount = (200 + 12) * 3; // card width + gap * 3
+                    // Scroll amount (width of 2 cards + gaps)
+                    const scrollAmount = (250 + 16) * 2; // card width + gap * 2
                     
+                    let autoScrollInterval;
+                    let isUserInteracting = false;
+                    
+                    // Auto-scroll function
+                    const startAutoScroll = () => {
+                        if (autoScrollInterval) clearInterval(autoScrollInterval);
+                        
+                        autoScrollInterval = setInterval(() => {
+                            if (!isUserInteracting) {
+                                const isAtEnd = carousel.scrollLeft >= (carousel.scrollWidth - carousel.clientWidth - 10);
+                                
+                                if (isAtEnd) {
+                                    // Reset to beginning
+                                    carousel.scrollTo({
+                                        left: 0,
+                                        behavior: 'smooth'
+                                    });
+                                } else {
+                                    // Scroll forward
+                                    carousel.scrollBy({
+                                        left: scrollAmount,
+                                        behavior: 'smooth'
+                                    });
+                                }
+                                updateButtons();
+                            }
+                        }, 3000); // Auto-scroll every 3 seconds
+                    };
+                    
+                    // Manual scroll functions
                     prevBtn.addEventListener('click', () => {
+                        isUserInteracting = true;
                         carousel.scrollBy({
                             left: -scrollAmount,
                             behavior: 'smooth'
                         });
+                        setTimeout(() => { isUserInteracting = false; }, 2000);
                     });
                     
                     nextBtn.addEventListener('click', () => {
+                        isUserInteracting = true;
                         carousel.scrollBy({
                             left: scrollAmount,
                             behavior: 'smooth'
                         });
+                        setTimeout(() => { isUserInteracting = false; }, 2000);
                     });
                     
                     // Update button states based on scroll position
@@ -837,6 +871,17 @@
                         nextBtn.disabled = isAtEnd;
                     };
                     
+                    // Pause auto-scroll on hover
+                    carousel.addEventListener('mouseenter', () => {
+                        isUserInteracting = true;
+                        if (autoScrollInterval) clearInterval(autoScrollInterval);
+                    });
+                    
+                    carousel.addEventListener('mouseleave', () => {
+                        setTimeout(() => { isUserInteracting = false; }, 1000);
+                        startAutoScroll();
+                    });
+                    
                     // Initial state
                     updateButtons();
                     
@@ -845,13 +890,18 @@
                     
                     // Update on resize
                     window.addEventListener('resize', updateButtons);
+                    
+                    // Start auto-scroll
+                    startAutoScroll();
                 }
                 
                 // Mouse wheel horizontal scroll
                 carousel.addEventListener('wheel', (e) => {
                     if (e.deltaY !== 0) {
                         e.preventDefault();
-                        carousel.scrollLeft += e.deltaY;
+                        isUserInteracting = true;
+                        carousel.scrollLeft += e.deltaY * 2;
+                        setTimeout(() => { isUserInteracting = false; }, 2000);
                     }
                 });
             });

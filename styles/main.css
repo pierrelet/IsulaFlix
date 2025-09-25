@@ -374,6 +374,7 @@
   /* Carousel sections */
   .carousel-section {
     position: relative;
+    overflow: hidden;
   }
   .carousel-header {
     display: flex;
@@ -386,33 +387,40 @@
     gap: var(--space-2);
   }
   .carousel-btn {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
-    border: 1px solid var(--color-border);
-    background: var(--color-surface);
-    color: var(--color-text);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all var(--dur-1) var(--ease-smooth);
-    opacity: 0.7;
+    opacity: 0.8;
+    font-size: 20px;
+    font-weight: bold;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   }
   .carousel-btn:hover {
     opacity: 1;
     border-color: var(--color-primary);
     background: var(--color-primary);
-    color: white;
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0, 212, 255, 0.4);
   }
   .carousel-btn:disabled {
     opacity: 0.3;
     cursor: not-allowed;
+    transform: none;
   }
   .carousel-btn:disabled:hover {
-    border-color: var(--color-border);
-    background: var(--color-surface);
-    color: var(--color-text);
+    border-color: rgba(255, 255, 255, 0.2);
+    background: rgba(0, 0, 0, 0.6);
+    transform: none;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
   }
 
   /* List actions */
@@ -868,26 +876,42 @@
      ===================== */
   .grid.movies {
     display: flex;
-    gap: var(--space-3);
+    gap: var(--space-4);
     overflow-x: auto;
     overflow-y: hidden;
-    padding: var(--space-2) 0;
+    padding: var(--space-4) 0;
     scroll-behavior: smooth;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE/Edge */
+    position: relative;
   }
   .grid.movies::-webkit-scrollbar {
     display: none; /* Chrome/Safari */
   }
   
   .card {
-    position: relative; border-radius: var(--radius-md); overflow: hidden;
-    background: var(--color-bg-elev); border: 1px solid var(--color-border);
-    transform-style: preserve-3d; perspective: 1000px;
+    position: relative; 
+    border-radius: var(--radius-lg); 
+    overflow: hidden;
+    background: var(--color-bg-elev); 
+    border: 1px solid var(--color-border);
+    transform-style: preserve-3d; 
+    perspective: 1000px;
     cursor: pointer;
     transition: all var(--dur-2) var(--ease-smooth);
     flex-shrink: 0;
-    width: 200px;
+    width: 250px;
+    transform: scale(0.95);
+    opacity: 0.8;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  }
+  
+  .card:hover {
+    transform: scale(1.05) translateY(-10px);
+    opacity: 1;
+    z-index: 10;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+    border-color: var(--color-primary);
   }
   .card-media { 
     aspect-ratio: 2/3; 
