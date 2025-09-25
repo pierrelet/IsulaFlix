@@ -848,6 +848,9 @@
     // Load real data from TMDB
     loadFromTMDB();
 
+    // Initialize categories
+    initializeCategories();
+
         // Carousel functionality
         initializeCarousels();
         
@@ -1159,6 +1162,56 @@
                 
                 showSimpleModal(fallbackAvatar.title, fallbackAvatar);
             }
+        }
+
+        // Initialize categories
+        function initializeCategories() {
+            console.log('Initializing categories...');
+            const categoriesGrid = document.getElementById('categoriesGrid');
+            if (!categoriesGrid) {
+                console.log('Categories grid not found');
+                return;
+            }
+
+            const categories = [
+                { name: 'Action', icon: '⚔️' },
+                { name: 'Comédie', icon: '😂' },
+                { name: 'Drame', icon: '🎭' },
+                { name: 'Horreur', icon: '👻' },
+                { name: 'Science-Fiction', icon: '🚀' },
+                { name: 'Romance', icon: '💕' },
+                { name: 'Thriller', icon: '🔪' },
+                { name: 'Animation', icon: '🎨' },
+                { name: 'Documentaire', icon: '📹' },
+                { name: 'Famille', icon: '👨‍👩‍👧‍👦' },
+                { name: 'Mystère', icon: '🔍' },
+                { name: 'Western', icon: '🤠' }
+            ];
+
+            categoriesGrid.innerHTML = '';
+            
+            categories.forEach((category, index) => {
+                const categoryCard = document.createElement('div');
+                categoryCard.className = 'category-card';
+                categoryCard.innerHTML = `
+                    <div class="category-content">
+                        <div class="category-icon">${category.icon}</div>
+                        <div class="category-title">${category.name}</div>
+                        <div class="category-count">${Math.floor(Math.random() * 50) + 10} films</div>
+                    </div>
+                `;
+                
+                // Add click handler to search for this category
+                categoryCard.addEventListener('click', () => {
+                    console.log(`Searching for category: ${category.name}`);
+                    // Redirect to search page with category filter
+                    window.location.href = `search.html?q=${encodeURIComponent(category.name)}`;
+                });
+                
+                categoriesGrid.appendChild(categoryCard);
+            });
+
+            console.log('Categories initialized successfully');
         }
 
         console.log('StreamFlix initialized successfully!');

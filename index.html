@@ -27,6 +27,7 @@
             <li><a class="nav-link is-active" data-tab="home" href="#home">Accueil</a></li>
             <li><a class="nav-link" data-tab="series" href="#series">Séries</a></li>
             <li><a class="nav-link" data-tab="films" href="#films">Films</a></li>
+            <li><a class="nav-link" data-tab="categories" href="#categories">Catégories</a></li>
             <li><a class="nav-link" data-tab="nouveaux" href="#nouveaux">Nouveautés</a></li>
             <li><a class="nav-link" data-tab="ma-liste" href="#list">Ma liste</a></li>
             <span class="nav-indicator" aria-hidden="true"></span>
@@ -119,6 +120,20 @@
         </div>
       </section>
 
+      <section class="rail carousel-section" id="categories" aria-labelledby="categories-title" data-title="Catégories">
+        <div class="container">
+          <div class="carousel-header">
+            <h2 id="categories-title" class="section-title">Catégories</h2>
+            <div class="carousel-nav">
+              <button class="carousel-btn carousel-prev" data-target="categories" aria-label="Précédent">‹</button>
+              <button class="carousel-btn carousel-next" data-target="categories" aria-label="Suivant">›</button>
+            </div>
+          </div>
+          <div class="categories-grid" id="categoriesGrid">
+          </div>
+        </div>
+      </section>
+
       <section class="rail carousel-section" id="nouveaux" aria-labelledby="news-title" data-title="Nouveautés">
         <div class="container">
           <div class="carousel-header">
@@ -129,7 +144,7 @@
             </div>
           </div>
           <div class="grid movies" data-carousel="nouveaux">
-            <!-- Cards inserted by JS -->
+      
           </div>
         </div>
       </section>
@@ -144,7 +159,7 @@
             </div>
           </div>
           <div class="grid movies" data-user-list data-carousel="list">
-            <!-- User list populated via JS -->
+            
           </div>
           <div class="list-actions" id="listActions" style="display: none;">
             <button class="btn ghost" id="clearListBtn">Vider la liste</button>
@@ -154,17 +169,104 @@
     </main>
 
     <footer class="site-footer">
-      <div class="container footer-inner">
-        <p>© <span id="year"></span> StreamFlix - Streaming Premium</p>
-        <nav aria-label="Pied de page">
-          <a href="#">Mentions</a>
-          <a href="#">Confidentialité</a>
-          <a href="#">Cookies</a>
-        </nav>
+      <div class="container">
+        <div class="footer-content">
+          
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+                <path d="M4 4h6l6 24h-6zM16 4h6l6 24h-6z"/>
+              </svg>
+              <span class="brand-name">StreamFlix</span>
+            </div>
+            <p class="footer-tagline">L'avenir du streaming est ici</p>
+            <div class="social-links">
+              <a href="#" aria-label="Facebook" class="social-link">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                </svg>
+              </a>
+              <a href="#" aria-label="Twitter" class="social-link">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
+                </svg>
+              </a>
+              <a href="#" aria-label="Instagram" class="social-link">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987 6.62 0 11.987-5.367 11.987-11.987C24.014 5.367 18.637.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.323-1.297C4.198 14.895 3.708 13.744 3.708 12.447s.49-2.448 1.297-3.323c.875-.807 2.026-1.297 3.323-1.297s2.448.49 3.323 1.297c.807.875 1.297 2.026 1.297 3.323s-.49 2.448-1.297 3.323c-.875.807-2.026 1.297-3.323 1.297zm7.83-9.781c-.49 0-.98-.49-.98-.98s.49-.98.98-.98.98.49.98.98-.49.98-.98.98z"/>
+                </svg>
+              </a>
+              <a href="#" aria-label="YouTube" class="social-link">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+         
+          <div class="footer-links">
+            <div class="footer-section">
+              <h3 class="footer-title">Contenu</h3>
+              <ul class="footer-list">
+                <li><a href="#films">Films</a></li>
+                <li><a href="#series">Séries</a></li>
+                <li><a href="#nouveaux">Nouveautés</a></li>
+                <li><a href="#categories">Catégories</a></li>
+                <li><a href="#list">Ma liste</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-section">
+              <h3 class="footer-title">Support</h3>
+              <ul class="footer-list">
+                <li><a href="#">Centre d'aide</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">Statut du service</a></li>
+                <li><a href="#">Signaler un problème</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-section">
+              <h3 class="footer-title">Entreprise</h3>
+              <ul class="footer-list">
+                <li><a href="#">À propos</a></li>
+                <li><a href="#">Carrières</a></li>
+                <li><a href="#">Presse</a></li>
+                <li><a href="#">Partenaires</a></li>
+                <li><a href="#">Investisseurs</a></li>
+              </ul>
+            </div>
+
+            <div class="footer-section">
+              <h3 class="footer-title">Légal</h3>
+              <ul class="footer-list">
+                <li><a href="#">Mentions légales</a></li>
+                <li><a href="#">Confidentialité</a></li>
+                <li><a href="#">Cookies</a></li>
+                <li><a href="#">CGU</a></li>
+                <li><a href="#">Accessibilité</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        
+        <div class="footer-bottom">
+          <div class="footer-bottom-content">
+            <p class="copyright">© <span id="year"></span> StreamFlix. Tous droits réservés.</p>
+            <div class="footer-bottom-links">
+              <a href="#">Français</a>
+              <a href="#">English</a>
+              <a href="#">Español</a>
+            </div>
+          </div>
+        </div>
       </div>
     </footer>
 
-    <!-- Modal détaillé -->
+    
     <div class="modal-overlay" id="modalOverlay" aria-hidden="true">
       <div class="modal-content" id="modalContent">
         <button class="modal-close" id="modalClose" aria-label="Fermer">×</button>
