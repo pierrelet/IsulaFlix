@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark light" />
+    <title>Résultats de recherche • IsulaFlix</title>
+    <link rel="icon" type="image/jpeg" href="assets/images/icons/Unknown-5.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Aller au contenu</a>
+
+    <header class="site-header" id="header" role="banner">
+      <div class="container header-inner">
+        <a class="brand" href="index.html" aria-label="IsulaFlix accueil">
+          <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 4h6l6 24h-6zM16 4h6l6 24h-6z"/></svg>
+          <span class="brand-name">IsulaFlix</span>
+        </a>
+
+        <nav class="primary-nav" aria-label="Navigation principale">
+          <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu">☰</button>
+          <ul id="navMenu" class="nav-list" role="tablist">
+            <li><a class="nav-link" data-tab="home" href="index.html">Accueil</a></li>
+            <li><a class="nav-link" data-tab="series" href="index.html#series">Séries</a></li>
+            <li><a class="nav-link" data-tab="films" href="index.html#films">Films</a></li>
+            <li><a class="nav-link" data-tab="nouveaux" href="index.html#nouveaux">Nouveautés</a></li>
+            <li><a class="nav-link" data-tab="ma-liste" href="index.html#list">Ma liste</a></li>
+            <span class="nav-indicator" aria-hidden="true"></span>
+          </ul>
+        </nav>
+
+        <div class="search-container">
+          <button class="search-toggle" id="searchToggle" aria-label="Rechercher">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+          </button>
+          <div class="search-bar" id="searchBar">
+            <input type="text" id="searchInput" placeholder="Rechercher des films, séries..." autocomplete="off">
+            <div class="search-results" id="searchResults"></div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <div class="theme-picker">
+            <button id="themeToggle" class="btn ghost" aria-haspopup="listbox" aria-expanded="false">Thème</button>
+            <ul id="themeMenu" class="theme-menu hidden" role="listbox" aria-label="Choisir un thème">
+              <li role="option" data-theme="dark" aria-selected="true">Sombre</li>
+              <li role="option" data-theme="light">Clair</li>
+              <li role="option" data-theme="sepia">Cinéma</li>
+            </ul>
+          </div>
+          <div class="profile-display" id="profileDisplay">
+            <img id="profileAvatar" src="" alt="Profil sélectionné" class="profile-avatar-small">
+            <span id="profileName" class="profile-name-small"></span>
+            <button id="changeProfile" class="btn ghost">Changer</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <nav class="breadcrumb" aria-label="Fil d'Ariane">
+      <div class="container">
+        <ol id="breadcrumb" class="crumbs" role="list"></ol>
+      </div>
+    </nav>
+
+    <main id="main">
+      <section class="search-results-section" id="searchResultsSection">
+        <div class="container">
+          <div class="search-header">
+            <h1 id="searchTitle" class="search-results-title">Résultats de recherche</h1>
+            <p id="searchSubtitle" class="search-results-subtitle">Recherche pour: <span id="searchQuery"></span></p>
+          </div>
+          
+          <div class="search-filters">
+            <button class="filter-btn active" data-filter="all">Tous</button>
+            <button class="filter-btn" data-filter="movies">Films</button>
+            <button class="filter-btn" data-filter="tv">Séries</button>
+          </div>
+
+          <div class="search-content">
+            <div id="searchLoading" class="search-loading">
+              <div class="loading-spinner"></div>
+              <p>Recherche en cours...</p>
+            </div>
+            
+            <div class="carousel-section">
+              <div class="carousel-header">
+                <h3 class="section-title">Résultats</h3>
+                <div class="carousel-nav">
+                  <button class="carousel-btn carousel-prev" data-target="search" aria-label="Précédent">‹</button>
+                  <button class="carousel-btn carousel-next" data-target="search" aria-label="Suivant">›</button>
+                </div>
+              </div>
+              <div id="searchGrid" class="grid movies" data-carousel="search">
+                <!-- Résultats de recherche -->
+              </div>
+            </div>
+            
+            <div id="noResults" class="no-results hidden">
+              <h2>Aucun résultat trouvé</h2>
+              <p>Essayez avec un autre terme de recherche</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <p>© <span id="year"></span> IsulaFlix - Streaming Premium</p>
+        <nav aria-label="Pied de page">
+          <a href="#">Mentions</a>
+          <a href="#">Confidentialité</a>
+          <a href="#">Cookies</a>
+        </nav>
+      </div>
+    </footer>
+
+    <!-- Modal détaillé -->
+    <div class="modal-overlay" id="modalOverlay" aria-hidden="true">
+      <div class="modal-content" id="modalContent">
+        <button class="modal-close" id="modalClose" aria-label="Fermer">×</button>
+        <div class="modal-media">
+          <img id="modalPoster" src="" alt="" class="modal-poster">
+          <div class="modal-backdrop" id="modalBackdrop"></div>
+        </div>
+        <div class="modal-info">
+          <h2 id="modalTitle" class="modal-title"></h2>
+          <div class="modal-meta">
+            <span id="modalYear" class="modal-year"></span>
+            <span id="modalRating" class="modal-rating"></span>
+            <span id="modalDuration" class="modal-duration"></span>
+            <span id="modalGenre" class="modal-genre"></span>
+          </div>
+          <p id="modalDescription" class="modal-description"></p>
+          <div class="modal-cast">
+            <h3>Acteurs principaux</h3>
+            <div id="modalCast" class="cast-list"></div>
+          </div>
+          <div class="modal-actions">
+            <button class="btn primary modal-play" id="modalPlay">
+              <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              Lancer
+            </button>
+            <button class="btn ghost modal-add" id="modalAdd">+ Ma liste</button>
+            <button class="btn ghost modal-info-btn" id="modalInfoBtn">ℹ Plus d'infos</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="scripts/search.js" defer></script>
+  </body>
+</html>

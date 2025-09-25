@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark light" />
+    <title>Choisir un profil • IsulaFlix</title>
+    <link rel="icon" type="image/jpeg" href="assets/images/icons/Unknown-5.jpg">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body class="profiles-page">
+    <header class="site-header" id="header" role="banner">
+      <div class="container header-inner">
+        <a class="brand" href="index.html" aria-label="IsulaFlix accueil">
+          <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 4h6l6 24h-6zM16 4h6l6 24h-6z"/></svg>
+          <span class="brand-name">IsulaFlix</span>
+        </a>
+      </div>
+    </header>
+
+    <main class="profiles-main">
+      <div class="container">
+        <div class="profiles-content">
+          <h1 class="profiles-title">Qui regarde IsulaFlix ?</h1>
+          <div class="profiles-grid-large">
+            <div class="profile-card-large" data-profile="profil1">
+              <img src="assets/images/profils/Unknown-2.jpg" alt="Profil 1" class="profile-avatar-large">
+              <h3 class="profile-name-large">Profil 1</h3>
+            </div>
+            <div class="profile-card-large" data-profile="profil2">
+              <img src="assets/images/profils/Unknown-3.jpg" alt="Profil 2" class="profile-avatar-large">
+              <h3 class="profile-name-large">Profil 2</h3>
+            </div>
+            <div class="profile-card-large" data-profile="profil3">
+              <img src="assets/images/profils/Unknown-4.jpg" alt="Profil 3" class="profile-avatar-large">
+              <h3 class="profile-name-large">Profil 3</h3>
+            </div>
+            <div class="profile-card-large add-profile-large" data-profile="add">
+              <div class="add-icon-large">+</div>
+              <h3 class="profile-name-large">Ajouter un profil</h3>
+            </div>
+          </div>
+          <div class="profiles-actions">
+            <button class="btn ghost" id="manageProfiles">Gérer les profils</button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script src="scripts/profiles.js" defer></script>
+  </body>
+</html>

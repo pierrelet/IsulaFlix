@@ -4,7 +4,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="dark light" />
-    <title>StreamFlix • Leets</title>
+    <title>IsulaFlix • Streaming Premium</title>
+    <link rel="icon" type="image/jpeg" href="assets/images/icons/Unknown-5.jpg">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Montserrat:wght@600;800&display=swap" rel="stylesheet" />
@@ -15,9 +16,9 @@
 
     <header class="site-header" id="header" role="banner">
       <div class="container header-inner">
-        <a class="brand" href="#" aria-label="StreamFlix accueil">
+        <a class="brand" href="#" aria-label="IsulaFlix accueil">
           <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 4h6l6 24h-6zM16 4h6l6 24h-6z"/></svg>
-          <span class="brand-name">StreamFlix</span>
+          <span class="brand-name">IsulaFlix</span>
         </a>
 
         <nav class="primary-nav" aria-label="Navigation principale">
@@ -32,6 +33,19 @@
           </ul>
         </nav>
 
+        <div class="search-container">
+          <button class="search-toggle" id="searchToggle" aria-label="Rechercher">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <path d="m21 21-4.35-4.35"></path>
+            </svg>
+          </button>
+          <div class="search-bar" id="searchBar">
+            <input type="text" id="searchInput" placeholder="Rechercher des films, séries..." autocomplete="off">
+            <div class="search-results" id="searchResults"></div>
+          </div>
+        </div>
+
         <div class="actions">
           <div class="theme-picker">
             <button id="themeToggle" class="btn ghost" aria-haspopup="listbox" aria-expanded="false">Thème</button>
@@ -41,7 +55,11 @@
               <li role="option" data-theme="sepia">Cinéma</li>
             </ul>
           </div>
-          <button class="btn primary">S'abonner</button>
+          <div class="profile-display" id="profileDisplay">
+            <img id="profileAvatar" src="" alt="Profil sélectionné" class="profile-avatar-small">
+            <span id="profileName" class="profile-name-small"></span>
+            <button id="changeProfile" class="btn ghost">Changer</button>
+          </div>
         </div>
       </div>
     </header>
@@ -55,52 +73,81 @@
     <main id="main">
       <section class="hero" id="home" aria-label="Hero" data-title="Accueil">
         <div class="hero-media" aria-hidden="true">
-          <div class="layer layer-back"></div>
-          <div class="layer layer-mid"></div>
-          <div class="layer layer-front"></div>
+          <video class="hero-video" autoplay muted loop playsinline>
+            <source src="assets/videos/AVATAR 3  DE FEU ET DE CENDRES Bande Annonce VF (2025).mp4" type="video/mp4">
+          </video>
+          <div class="hero-overlay"></div>
         </div>
         <div class="container hero-content">
-          <h1 class="hero-title"><span>Regardez</span> sans limites.</h1>
-          <p class="hero-sub">Films, séries et plus encore. Où vous voulez.</p>
+          <h1 class="hero-title"><span>IsulaFlix</span> - L'avenir du streaming</h1>
+          <p class="hero-sub">Découvrez Avatar 3 : De Feu et de Cendres et bien plus encore. Où vous voulez, quand vous voulez.</p>
           <div class="hero-cta">
-            <button class="btn primary">Commencer</button>
-            <button class="btn ghost">En savoir plus</button>
+            <button class="btn primary">Commencer maintenant</button>
+            <button class="btn ghost">Découvrir Avatar 3</button>
           </div>
         </div>
       </section>
 
-      <section class="rail" id="series" aria-labelledby="series-title" data-title="Séries">
+
+      <section class="rail carousel-section" id="series" aria-labelledby="series-title" data-title="Séries">
         <div class="container">
-          <h2 id="series-title" class="section-title">Tendances Séries</h2>
-          <div class="grid movies" data-skeleton>
+          <div class="carousel-header">
+            <h2 id="series-title" class="section-title">Tendances Séries</h2>
+            <div class="carousel-nav">
+              <button class="carousel-btn carousel-prev" data-target="series" aria-label="Précédent">‹</button>
+              <button class="carousel-btn carousel-next" data-target="series" aria-label="Suivant">›</button>
+            </div>
+          </div>
+          <div class="grid movies" data-skeleton data-carousel="series">
             <!-- Cards inserted by JS -->
           </div>
         </div>
       </section>
 
-      <section class="rail" id="films" aria-labelledby="films-title" data-title="Films">
+      <section class="rail carousel-section" id="films" aria-labelledby="films-title" data-title="Films">
         <div class="container">
-          <h2 id="films-title" class="section-title">Populaire Films</h2>
-          <div class="grid movies">
+          <div class="carousel-header">
+            <h2 id="films-title" class="section-title">Populaire Films</h2>
+            <div class="carousel-nav">
+              <button class="carousel-btn carousel-prev" data-target="films" aria-label="Précédent">‹</button>
+              <button class="carousel-btn carousel-next" data-target="films" aria-label="Suivant">›</button>
+            </div>
+          </div>
+          <div class="grid movies" data-carousel="films">
             <!-- Cards inserted by JS -->
           </div>
         </div>
       </section>
 
-      <section class="rail" id="nouveaux" aria-labelledby="news-title" data-title="Nouveautés">
+      <section class="rail carousel-section" id="nouveaux" aria-labelledby="news-title" data-title="Nouveautés">
         <div class="container">
-          <h2 id="news-title" class="section-title">Nouveautés</h2>
-          <div class="grid movies">
+          <div class="carousel-header">
+            <h2 id="news-title" class="section-title">Nouveautés</h2>
+            <div class="carousel-nav">
+              <button class="carousel-btn carousel-prev" data-target="nouveaux" aria-label="Précédent">‹</button>
+              <button class="carousel-btn carousel-next" data-target="nouveaux" aria-label="Suivant">›</button>
+            </div>
+          </div>
+          <div class="grid movies" data-carousel="nouveaux">
             <!-- Cards inserted by JS -->
           </div>
         </div>
       </section>
 
-      <section class="rail" id="list" aria-labelledby="list-title" data-title="Ma liste">
+      <section class="rail carousel-section" id="list" aria-labelledby="list-title" data-title="Ma liste">
         <div class="container">
-          <h2 id="list-title" class="section-title">Ma liste</h2>
-          <div class="grid movies" data-user-list>
+          <div class="carousel-header">
+            <h2 id="list-title" class="section-title">Ma liste</h2>
+            <div class="carousel-nav">
+              <button class="carousel-btn carousel-prev" data-target="list" aria-label="Précédent">‹</button>
+              <button class="carousel-btn carousel-next" data-target="list" aria-label="Suivant">›</button>
+            </div>
+          </div>
+          <div class="grid movies" data-user-list data-carousel="list">
             <!-- User list populated via JS -->
+          </div>
+          <div class="list-actions" id="listActions" style="display: none;">
+            <button class="btn ghost" id="clearListBtn">Vider la liste</button>
           </div>
         </div>
       </section>
@@ -108,7 +155,7 @@
 
     <footer class="site-footer">
       <div class="container footer-inner">
-        <p>© <span id="year"></span> StreamFlix by Leets</p>
+        <p>© <span id="year"></span> IsulaFlix - Streaming Premium</p>
         <nav aria-label="Pied de page">
           <a href="#">Mentions</a>
           <a href="#">Confidentialité</a>
@@ -116,6 +163,41 @@
         </nav>
       </div>
     </footer>
+
+    <!-- Modal détaillé -->
+    <div class="modal-overlay" id="modalOverlay" aria-hidden="true">
+      <div class="modal-content" id="modalContent">
+        <button class="modal-close" id="modalClose" aria-label="Fermer">×</button>
+        <div class="modal-media">
+          <img id="modalPoster" src="" alt="" class="modal-poster">
+          <div class="modal-backdrop" id="modalBackdrop"></div>
+        </div>
+        <div class="modal-info">
+          <h2 id="modalTitle" class="modal-title"></h2>
+          <div class="modal-meta">
+            <span id="modalYear" class="modal-year"></span>
+            <span id="modalRating" class="modal-rating"></span>
+            <span id="modalDuration" class="modal-duration"></span>
+            <span id="modalGenre" class="modal-genre"></span>
+          </div>
+          <p id="modalDescription" class="modal-description"></p>
+          <div class="modal-cast">
+            <h3>Acteurs principaux</h3>
+            <div id="modalCast" class="cast-list"></div>
+          </div>
+          <div class="modal-actions">
+            <button class="btn primary modal-play" id="modalPlay">
+              <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+              </svg>
+              Lancer
+            </button>
+            <button class="btn ghost modal-add" id="modalAdd">+ Ma liste</button>
+            <button class="btn ghost modal-info-btn" id="modalInfoBtn">ℹ Plus d'infos</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <script src="scripts/main.js" defer></script>
   </body>
